@@ -12,7 +12,7 @@
 #include "ofMain.h"
 
 class VertPoints{
-
+	
 public:
 	void setup();
 	void update();
@@ -21,10 +21,12 @@ public:
 	//ofVec2f update(ofVec2f change, ofVec2f& pt);
 	
 	vector<ofVec2f> pts;
-	
-	VertPoints();
-	
 	int total_pts = 20;
+	ofPolyline line;
+
+	VertPoints();
+
+	
 private:
 	
 };

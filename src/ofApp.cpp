@@ -5,7 +5,7 @@ void ofApp::setup(){
 	ofSetBackgroundAuto(false);
 	ofBackground(255);
 	
-	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+	//ofEnableBlendMode(OF_BLENDMODE_ADD);
 
 	vtpts.setup();
 }
@@ -17,13 +17,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	vtpts.draw();
 	
 	ofPushStyle();
-	ofSetColor(255, 255, 255, 5);
+	ofSetColor(255, 255, 255, 200);
 	ofFill();
 	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 	ofPopStyle();
+	
+	vtpts.draw();
+
 }
 
 //--------------------------------------------------------------

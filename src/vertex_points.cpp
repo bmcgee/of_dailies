@@ -21,21 +21,32 @@ void VertPoints::setup(){
 
 void VertPoints::update(){
 	for(int i = 0; i < total_pts; ++i) {
-		float x = ofNoise(ofGetElapsedTimef()/10, i);
-		float y = ofNoise(ofGetElapsedTimef()/10, -i);
+		float r = ofNoise(ofGetElapsedTimef()/10, i);
+		float theta = ofNoise(ofGetElapsedTimef()/10, -i);
+		
+		float x = r * cos(theta);
+		float y = r * sin(theta);
+		//working on implenting theta coordiantes.
 		
 		pts[i].x = ofMap(x, 0, 1, 0, ofGetWidth());
 		pts[i].y = ofMap(y, 0, 1, 0, ofGetHeight());
 		
 	}
-
+	
 }
 
 void VertPoints::draw(){
+	
+	ofSetColor(0, 0, 0, 5);
+	line.draw();
+
+	//draw pts
 	for(int i = 0; i < pts.size(); ++i){
 		ofSetColor(0);
 		ofNoFill();
+		ofPoint temp = pts[i];
 		ofDrawCircle(pts[i], 2);
+		line.addVertex(temp);
 	}
-	
+	line.close();
 }
