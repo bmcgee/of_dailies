@@ -4,28 +4,26 @@
 void ofApp::setup(){
 	ofSetBackgroundAuto(false);
 	ofBackground(255);
+	ofEnableAlphaBlending();
+	ofSetFrameRate(200);
 	
-	//ofEnableBlendMode(OF_BLENDMODE_ADD);
-
 	vtpts.setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 	vtpts.update();
+
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	
-	ofPushStyle();
-	ofSetColor(255, 255, 255, 200);
-	ofFill();
-	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 	ofPopStyle();
-	
+	ofSetColor(255, 255, 255, 20);
+	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+	ofPushStyle();
 	vtpts.draw();
-
 }
 
 //--------------------------------------------------------------
