@@ -13,18 +13,19 @@ VertPoints::VertPoints(){
 void VertPoints::setup(){
 	cout << "Setting up" << endl;
 	
-	for(int i = 0; i < total_pts; ++i) {
+	for(int i = 0; i < total_pts; i++) {
 		ofVec2f temp(0, 0);
 		pts.push_back(temp);
 	}
+	//path.newSubPath();
 }
 
 void VertPoints::update(){
-	for(int i = 0; i < total_pts; ++i) {
+	for(int i = 0; i < total_pts; i++) {
 		
 		float fr = ofGetElapsedTimef();
 		
-		rad = (sin(fr*2) * 1.2) * 50;
+		//rad = ofMap((sin(fr*2) * 1.2) * 50;
 		//cout << sin(fr);
 		
 		float r = rad + (ofNoise(fr*radFreq, i)*radAmp);
@@ -52,17 +53,33 @@ void VertPoints::update(){
 void VertPoints::draw(){
 	//draw pts
 	line.clear();
-	for(int i = 0; i < pts.size(); i++){
+	path.clear();
+	
+	auto commands = path.getCommands();
+	
+	path.moveTo(pts[9]);
+	path.curveTo(pts[0]);
+	for(int i = 0; i < 3; i++){
 		ofSetColor(0);
 		ofNoFill();
 		ofPoint temp = pts[i];
-		ofDrawCircle(pts[i], 2);
+		//ofDrawCircle(pts[i], 2);
 		line.addVertex(temp);
+		path.curveTo(pts[i]);
+		ofDrawBitmapString(ofToString(i), pts[i].x, pts[i].y);
 
 	}
+
 	line.close();
-	ofSetColor(0, 0, 0, 100);
-	ofNoFill();
-	line.draw();
+	//path.close();
+	
+	path.setFilled(true);
+	path.setFillColor(ofColor(0,0,0,10));
+	path.setStrokeWidth(2);
+	path.setStrokeColor(ofColor(0,0,0));
+	
+	path.draw();
+
+	//line.draw();
 	
 }

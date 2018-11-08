@@ -20,7 +20,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofPopStyle();
-	ofSetColor(255, 255, 255, 20);
+	ofSetColor(255, 255, 255, 200);
 	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 	ofPushStyle();
 	vtpts.draw();

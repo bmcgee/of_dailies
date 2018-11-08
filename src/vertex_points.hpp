@@ -20,9 +20,10 @@ public:
 	
 	//ofVec2f update(ofVec2f change, ofVec2f& pt);
 	
-	vector<ofVec2f> pts;
+	vector<glm::vec2> pts;
 	int total_pts = 10;
 	ofPolyline line;
+	ofPath path;
 
 	VertPoints();
 
@@ -33,7 +34,7 @@ public:
 	float rad = 100;
 	float rotRate = .1;
 	
-	float transAmp = .5;
+	float transAmp = .2;
 	
 private:
 	
