@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "vertex_points.hpp"
+#include "wobble_type.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -23,5 +24,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 	
 	VertPoints vtpts;
+	WobbleType wobble;
 		
 };

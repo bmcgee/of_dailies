@@ -2,28 +2,27 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofSetBackgroundAuto(false);
+	ofSetBackgroundAuto(true);
 	ofBackground(255);
 	ofEnableAlphaBlending();
-	ofSetFrameRate(200);
+	ofSetFrameRate(60);
 	
 	vtpts.setup();
+	//wobble.setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 	vtpts.update();
-
-
+	//wobble.update();
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofPopStyle();
-	ofSetColor(255, 255, 255, 200);
-	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-	ofPushStyle();
+
 	vtpts.draw();
+	//wobble.draw();
 }
 
 //--------------------------------------------------------------
