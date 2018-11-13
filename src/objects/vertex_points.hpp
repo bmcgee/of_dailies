@@ -20,8 +20,6 @@ public:
 	
 	//ofVec2f update(ofVec2f change, ofVec2f& pt);
 	
-	vector<glm::vec2> pts;
-	int total_pts = 10;
 	ofPolyline line;
 	ofPath path;
 
@@ -38,29 +36,29 @@ public:
 	
 	ofTrueTypeFont font;
 	const int fontsize = 15;
-	string str = "brian";
+
+	//word class
+	class Word {
+	public:
+		float r = 100;
+		string str;
+		vector<glm::vec2> pos;
+		float life;
+		Word(string s)  {
+			str = s;
+			pos.resize(s.size());
+		};
+	private:
+	};
 	
-	vector<string> str_input;
+	//character class
+
+	vector<Word> str_input;
+
+	float fr = ofGetElapsedTimef();
 
 private:
 	
 };
-
-class StrPts {
-public:
-	float life;
-	char c;
-	//float r;
-	glm::vec2 pos;
-	//float theta;
-	
-	StrPts(int x, int y, char c)
-	
-	void draw();
-private:
-		
-}
-
-
 
 #endif /* vertex_points_hpp */

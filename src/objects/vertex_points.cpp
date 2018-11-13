@@ -11,59 +11,40 @@ VertPoints::VertPoints(){
 }
 
 void VertPoints::setup(){
-	cout << "Setting up" << endl;
-	
-	for(int i = 0; i < total_pts; i++) {
-		ofVec2f temp(0, 0);
-		pts.push_back(temp);
-	}
+	cout << "Setting up:" << endl;
 	
 	font.load("manuka.otf", fontsize, true, true, true);
-	total_pts = str.size();
 	
+	Word tempWord("brian");
+	str_input.push_back(tempWord);
 }
 
 void VertPoints::update(){
-	for(int i = 0; i < total_pts; i++) {
-		
-		float fr = ofGetElapsedTimef();
-		
-		
-		float r = 100;
-		float theta = (360/total_pts) * i;
-		
-		float x = r * cos(ofDegToRad(theta));
-		float y = r * sin(ofDegToRad(theta));
-		//working on implenting theta coordiantes.
-		
-		pts[i].x = ofMap(x, 0, 1, 0, ofGetWidth());
-		pts[i].y = ofMap(y, 0, 1, 0, ofGetHeight());
-		
-		float xCenter = ofGetWidth()/2;
-		float yCenter = ofGetHeight()/2;
-		pts[i].x = x + xCenter;
-		pts[i].y = y + yCenter;
-		
-		
+	float fr = ofGetElapsedTimef();
+
+	for(int i = 0; i < str_input.size(); i++) {
+		auto word = str_input[i];
+		for(int j = 0; i < word.str.size(); j++)  {
+			float theta = (360/word.str.size()) * i;
+			float x = word.r * cos(ofDegToRad(theta));
+			float y = word.r * sin(ofDegToRad(theta));
+			word.pos[j] = {x, y};
+		}
 	}
 	
 }
 
 void VertPoints::draw(){
+	float fr = ofGetElapsedTimef();
 
-	auto commands = path.getCommands();
-
-	for(int i = 0; i < total_pts; i++){
-		ofSetColor(0);
-		ofNoFill();
-		ofPoint temp = pts[i];
-		//ofDrawCircle(pts[i], 2);
-		line.addVertex(temp);
-		//path.curveTo(pts[i]);
-		string tempstr = str.substr(i,1);
-		font.drawString(tempstr, pts[i].x, pts[i].y);
-		//ofDrawBitmapString(ofToString(i), pts[i].x+3, pts[i].y-1);
-		
+	ofSetColor(0);
+	ofNoFill();
+	
+	for(int i = 0; i < str_input.size(); i++) {
+		auto word = str_input[i];
+		for(int j = 0; i < word.str.size(); j++)  {
+			font.drawString(word.str.substr(j, 1), word.pos[j].x, word.pos[j].y);
+		}
 	}
 	
 	line.close();
