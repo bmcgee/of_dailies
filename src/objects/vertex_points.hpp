@@ -25,17 +25,8 @@ public:
 
 	VertPoints();
 
-	float radFreq = .5;
-	float radAmp = 50;
-	float thetaFreq = .8;
-	float thetaAmp = 10;
-	float rad = 100;
-	float rotRate = .1;
-	
-	float transAmp = .2;
-	
 	ofTrueTypeFont font;
-	const int fontsize = 15;
+	const int fontsize = 80;
 
 	//word class
 	class Word {
@@ -43,11 +34,20 @@ public:
 		float r = 100;
 		string str;
 		vector<glm::vec2> pos;
-		float life;
+		float life = 100;
+		size_t t;
+		
 		Word(string s)  {
 			str = s;
-			pos.resize(s.size());
+			pos.resize(str.size());
+			t = str.size();
 		};
+
+		int size() { return str.size(); };
+	
+		void update();
+		void draw(ofTrueTypeFont font);
+
 	private:
 	};
 	

@@ -15,7 +15,7 @@ void VertPoints::setup(){
 	
 	font.load("manuka.otf", fontsize, true, true, true);
 	
-	Word tempWord("brian");
+	Word tempWord("BRIAN");
 	str_input.push_back(tempWord);
 }
 
@@ -23,12 +23,13 @@ void VertPoints::update(){
 	float fr = ofGetElapsedTimef();
 
 	for(int i = 0; i < str_input.size(); i++) {
-		auto word = str_input[i];
-		for(int j = 0; i < word.str.size(); j++)  {
-			float theta = (360/word.str.size()) * i;
-			float x = word.r * cos(ofDegToRad(theta));
-			float y = word.r * sin(ofDegToRad(theta));
-			word.pos[j] = {x, y};
+		Word *word = &str_input[i];
+		for(int j = 0; j < word->size(); j++)  {
+			float theta = (360/word->size()) * j;
+			float x = str_input[i].r * cos(ofDegToRad(theta));
+			float y = str_input[i].r * sin(ofDegToRad(theta));
+			str_input[i].pos[j].x = x;
+			str_input[i].pos[j].y = y;
 		}
 	}
 	
@@ -38,15 +39,12 @@ void VertPoints::draw(){
 	float fr = ofGetElapsedTimef();
 
 	ofSetColor(0);
-	ofNoFill();
 	
+	ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
 	for(int i = 0; i < str_input.size(); i++) {
-		auto word = str_input[i];
-		for(int j = 0; i < word.str.size(); j++)  {
-			font.drawString(word.str.substr(j, 1), word.pos[j].x, word.pos[j].y);
-		}
+		Word *word = &str_input[i];
+		word->draw(font);
 	}
-	
 	line.close();
 	//path.close();
 	
@@ -60,3 +58,23 @@ void VertPoints::draw(){
 	//line.draw();
 	
 }
+
+void VertPoints::Word::draw(ofTrueTypeFont font) {
+	ofPushMatrix();
+	ofRotateDeg(ofGetElapsedTimef()*2);
+	for(int i = 0; i < life; i++ ) {
+		float rot = ofMap(i, 0, life, 0, 1);
+		ofRotateDeg(-rot);
+		for(int j = 0; j < str.size(); j++) {
+			ofFill();
+			ofSetColor(255, 255, 255, ofMap(i, 0, life, 255, 0));
+			font.drawStringAsShapes(str.substr(j, 1), pos[j].x, pos[j].y);
+			ofNoFill();
+			ofSetColor(255, 0, 0, ofMap(i, 0, life, 255, 0));
+			font.drawStringAsShapes(str.substr(j, 1), pos[j].x, pos[j].y);
+		}
+	}
+	ofPopMatrix();
+
+}
+
