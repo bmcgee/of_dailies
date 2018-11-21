@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "vertex_points.hpp"
-#include "wobble_type.hpp"
+//#include "spintype.hpp"
+//#include "wobble_type.hpp"
+#include "bmc_type.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -23,7 +24,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	
-	VertPoints vtpts;
-	WobbleType wobble;
-		
+	//bmcWordCircle word;
+	vector <bmcWordCircle> words;
+	
+	
+	int radius = 50;
+	ofTrueTypeFont font;
+	
+	//int radius = 100;
 };
