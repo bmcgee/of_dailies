@@ -38,5 +38,9 @@
 	<string>1010</string>
 	<key>DTXcodeBuild</key>
 	<string>10B61</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs to access the camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs to access the microphone</string>
 </dict>
 </plist>

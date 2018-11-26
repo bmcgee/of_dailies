@@ -17,7 +17,7 @@ public:
 	glm::vec2 pos;			//position
 	float ang; 				//rotation
 	ofRectangle bb;			//bounding box
-	ofColor bgc = 0;		//bgcolor;
+	ofColor bgc = {0,125,0};		//bgcolor;
 	ofColor c = 255;		//fgcolor
 	bool bg = true;			//bg bool
 

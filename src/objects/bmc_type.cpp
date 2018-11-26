@@ -20,6 +20,8 @@ void bmcLetter::draw(ofTrueTypeFont f) {
 	bb = f.getStringBoundingBox(ltr, 0, 0);
 
 	ofPushMatrix();
+		//bb = f.getBoundingBox
+	
 		//ofRotateRad(rot);
 		ofTranslate(pos.x, pos.y);
 		ofRotateDeg( -ofRadToDeg(ang) + 90 );
@@ -29,10 +31,21 @@ void bmcLetter::draw(ofTrueTypeFont f) {
 		ofTranslate(-bb.width/2, bb.height/2);
 		if(bg) {
 			ofSetColor(bgc);
-			ofDrawRectangle(bb);
+			//ofDrawRectangle(bb);
 		}
 		ofSetColor(c);
-		f.drawStringAsShapes(ltr, 0, 0);
+	
+		// DRAW STRING METHOD
+		f.drawString(ltr, 0, 0);
+
+		//DRAW VBO ATTEMPT
+//		ofVboMesh mesh;
+//		f.getStringMesh(ltr, 0, 0);
+//
+//		f.getFontTexture().bind();
+//		mesh.draw();
+//		f.getFontTexture().unbind();
+
 	ofPopMatrix();
 }
 

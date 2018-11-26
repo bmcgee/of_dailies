@@ -16,8 +16,15 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	//framerate
+	int frame = ofGetFrameNum();
+	
+	std::stringstream strm;
+	strm << "fps: " << int(ofGetFrameRate()) << " f: " << frame;
+	ofSetWindowTitle(strm.str());
+	
 	//wobble.update();
-	if ( ofGetFrameNum() % 10 == 0) { words.push_back(bmcWordCircle("BRIAN")); }
+	if ( frame % 10 == 0) { words.push_back(bmcWordCircle("BRIAN")); }
 	
 	for (int i=0; i < words.size(); i++) {
 		bmcWordCircle *word = &words[i];
