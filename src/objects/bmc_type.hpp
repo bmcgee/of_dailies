@@ -17,38 +17,48 @@ public:
 	glm::vec2 pos;			//position
 	float ang; 				//rotation
 	ofRectangle bb;			//bounding box
-	ofColor bgc = {0,125,0};		//bgcolor;
+	ofColor bgc = {0,0,0};		//bgcolor;
 	ofColor c = 255;		//fgcolor
-	bool bg = true;			//bg bool
+	bool fill = false;
+	bool bg = false;
+	//bg bool
 
 	void update(glm::vec2 p);
-	void draw(ofTrueTypeFont f);
+	void draw(ofTrueTypeFont &f);
 	
 	bmcLetter(string letter);
 private:
 };
 
-class bmcWordCircle {
+
+class bmcStringCircle {
 public:
 	string str;
-	bool outline;
-	ofColor c;
 	glm::vec2 pos;
+	
+	bool fg = true;
 	float sz;
+	bool fill = false;
+	float rot = 0;
+	int life = 0;
+	int maxLife = 400; 
+	
+	ofColor c;
 	vector <bmcLetter> letters;
 	
 	void setup();
 	void update();
-	void draw(ofTrueTypeFont f);
+	void draw(ofTrueTypeFont &f);
 	
 	//circle version
 	float rad = 100;
+	
 	int size() { return letters.size(); };
 	
-	bmcWordCircle(string s);
+	bmcStringCircle(string s);
+	
 private:
 };
-
 
 
 #endif /* bmc_type_hpp */

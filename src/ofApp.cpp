@@ -5,32 +5,43 @@ void ofApp::setup(){
 	ofSetBackgroundAuto(true);
 	ofBackground(0);
 	ofEnableAlphaBlending();
-	ofSetFrameRate(60);
+	ofSetFrameRate(framerate);
 	ofEnableSmoothing();
 	
-	//wobble.setup();
-	font.load("GT Zirkon Black", 50, true, true, true);
+	gui.setup();
+	gui.add(radius.setup("radius", .5, 0, 10));
+	gui.add(rotation.setup("rotation", .5, 0, 10));
+	gui.add(emit.setup("emit", 10, 0, 100));
+
 	
-	words.push_back(bmcWordCircle("BRIAN"));
+	//wobble.setup();
+	font.load("GT Zirkon Black", 40, true, true, true);
+	
+	firstWord.rad = radius;
+	//words.push_back(firstWord);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 	//framerate
-	int frame = ofGetFrameNum();
+	int frame = int(ofGetFrameNum());
+	int fps = int(ofGetFrameRate());
 	
 	std::stringstream strm;
 	strm << "fps: " << int(ofGetFrameRate()) << " f: " << frame;
 	ofSetWindowTitle(strm.str());
 	
 	//wobble.update();
-	if ( frame % 10 == 0) { words.push_back(bmcWordCircle("BRIAN")); }
+	firstWord.pos = {ofGetMouseX(), ofGetMouseY()};
+	if ( frame % emit == 0) { words.push_back(firstWord); }
 	
 	for (int i=0; i < words.size(); i++) {
-		bmcWordCircle *word = &words[i];
-		word->rad++;
+		bmcStringCircle *word = &words[i];
+//		word->rad = word->rad + radius;
+		word->rot = word->rot + rotation;
+		word->life++;
 		word->update();
-		if (word->rad == 300) {
+		if (word->life == word->maxLife) {
 			words.erase(words.begin() + i);
 		}
 	}
@@ -40,40 +51,25 @@ void ofApp::update(){
 void ofApp::draw(){
 	//wobble.draw();
 	
-	for (int i=words.size()-1; i > 0; i--) {
+	for (int i=0; i < words.size(); i++) {
 		
 		ofPushMatrix();
 		
-		ofTranslate(ofGetWindowWidth()/2, ofGetWindowHeight()/2);
-		float fr = ofGetFrameNum() * 5;
-		ofRotateDeg( fr );
-		
-		ofColor a{220, 20, 0};
-		ofColor b{50, 50, 200};
-		ofColor c = a.lerp(b, ofMap(i, 0, words.size(), 0, 1));
-		
-		ofSetColor(c);
-		ofNoFill();
-		
-		ofSetLineWidth(2);
-		ofSetCircleResolution(100);
-		ofDrawCircle(0, 0, words[i].rad);
-		
-		ofFill();
-		
-		for(int l=0; l < words[i].size(); l++) {
-			words[i].letters[l].c = c;
-		}
-		
+			//center drawing
+			//ofTranslate(ofGetMouseX(), ofGetMouseY());
 		words[i].draw(font);
 		
 		ofPopMatrix();
 	}
+	
+	gui.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	
+	if (key == 'x') {
+		words.clear();
+	}
 }
 
 //--------------------------------------------------------------

@@ -15,70 +15,96 @@ void bmcLetter::update(glm::vec2 p) {
 	pos = p;
 }
 
-void bmcLetter::draw(ofTrueTypeFont f) {
+void bmcLetter::draw(ofTrueTypeFont &f) {
 	//letter draw
 	bb = f.getStringBoundingBox(ltr, 0, 0);
 
 	ofPushMatrix();
-		//bb = f.getBoundingBox
 	
 		//ofRotateRad(rot);
 		ofTranslate(pos.x, pos.y);
 		ofRotateDeg( -ofRadToDeg(ang) + 90 );
 		ofSetColor(0, 255, 0);
-		ofDrawRectangle(0, 0, 5, 5);
+		//ofDrawRectangle(0, 0, 5, 5);
 
 		ofTranslate(-bb.width/2, bb.height/2);
 		if(bg) {
-			ofSetColor(bgc);
-			//ofDrawRectangle(bb);
+			bb.scaleFromCenter(1.2, 1.2);
+			
+			ofPopStyle();
+				ofSetColor(bgc);
+				ofFill();
+				ofDrawRectangle(bb);
+			ofPushStyle();
+			
 		}
-		ofSetColor(c);
 	
 		// DRAW STRING METHOD
+		ofPopStyle();
+		ofSetColor(c);
+		fill ? ofFill() : ofNoFill();
+		ofNoFill();
 		f.drawString(ltr, 0, 0);
-
-		//DRAW VBO ATTEMPT
-//		ofVboMesh mesh;
-//		f.getStringMesh(ltr, 0, 0);
-//
-//		f.getFontTexture().bind();
-//		mesh.draw();
-//		f.getFontTexture().unbind();
+		ofPushStyle();
 
 	ofPopMatrix();
 }
 
 //word
-bmcWordCircle::bmcWordCircle(string s) {
+bmcStringCircle::bmcStringCircle(string s) {
+	
 	str = s;
 	for(int i=0; i < str.size(); i++) {
 		bmcLetter ltr(str.substr(i, 1));
-
-		//add to word
 		letters.push_back(ltr);
 	}
 }
 
-void bmcWordCircle::setup() {
-
+void bmcStringCircle::setup() {
 }
 
-void bmcWordCircle::update() {
+void bmcStringCircle::update() {
+	//update color
+	c = ofMap(life, 0, maxLife, 255, 0);
+	
+	//update rad on life
+	rad = ofMap(life, 0, maxLife, 100, maxLife);
+	
 	//circle stuff
 	int i = 0;
 	for( auto &ltr : letters) {
 		float ang = ofDegToRad(360/str.size() * i);
-		ltr.pos.x = rad * cos(ang);
-		ltr.pos.y = rad * sin(ang);
+		ang = ang + ofDegToRad(rot);
+		ltr.pos.x = rad * cos(ang) + pos.x;
+		ltr.pos.y = rad * sin(ang) + pos.y;
 		ltr.ang = -(ang);
+		
+		ltr.c = c;
+		
 		++i;
 	}
 }
 
-void bmcWordCircle::draw(ofTrueTypeFont f) {
-	for(int i=0; i < letters.size(); i++) {
-		bmcLetter ltr = letters[i];
-		ltr.draw(f);
+void bmcStringCircle::draw(ofTrueTypeFont &f) {
+	
+	ofSetColor(c);
+	ofNoFill();
+	
+	ofSetLineWidth(1);
+	ofSetCircleResolution(100);
+	
+	ofDrawCircle(pos.x, pos.y, rad);
+	
+	if (fg) {
+		for(int i=0; i < letters.size(); i++) {
+			ofPopStyle();
+				bmcLetter *ltr = &letters[i];
+				if(fill) { ltr->fill = fill; };
+			
+				ltr->draw(f);
+			
+			ofPushStyle();
+		}
 	}
+	
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
 //#include "spintype.hpp"
 //#include "wobble_type.hpp"
 #include "bmc_type.hpp"
@@ -24,11 +25,21 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	
+		int framerate = 60;
+	
+		ofxPanel gui;
+		ofxFloatSlider radius;
+		ofxFloatSlider rotation;
+		ofxIntSlider emit;
+
+	
 	//bmcWordCircle word;
-	vector <bmcWordCircle> words;
+	bmcStringCircle firstWord = bmcStringCircle("Park that car.");
+
+	vector <bmcStringCircle> words;
 	
 	
-	int radius = 50;
+	int start_radius = 10;
 	ofTrueTypeFont font;
 	
 	//int radius = 100;
